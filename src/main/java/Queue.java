@@ -10,16 +10,9 @@ public class Queue<T>
 		}
 	}
 	
-	protected Node<T> front;
-	protected Node<T> back;
+	protected Node<T> front = null;
+	protected Node<T> back = null;
     //be sure that your attributes are protected, so subclasses can use them
-
-
-   public Queue()
-   {
-	   front = null;
-	   back = null;
-   }
 
 
     /**Adds val to the end of the queue

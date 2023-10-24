@@ -7,22 +7,18 @@ import org.junit.jupiter.api.Test;
 
 class PQueueTest {
 	
-	Comparator<Customer> worth;
-	Comparator<Customer> loyalty;
-	Comparator<Customer> worthPolite;
+	Comparator<Customer> worth = new Customer.WorthComparator();
+	Comparator<Customer> loyalty = new Customer.LoyaltyComparator();
+	Comparator<Customer> worthPolite = new Customer.WorthPoliteComparator();
 	
 	Customer Bradshaw = new Customer(20, 20, 1);
 	Customer Bailey = new Customer(12, 3, 12);
 	Customer Toth = new Customer(12, 12, 20);
 	Customer Allen = new Customer(12, 12, 12);
 	
-	@BeforeEach
-	void setUp() {
-		worth = new Customer.WorthComparator();
-		loyalty = new Customer.LoyaltyComparator();
-		worthPolite = new Customer.WorthPoliteComparator();
-	}
-	
+	PriorityQueue<Customer> worthQueue = new PriorityQueue<>(worth);
+	Customer Jackson = new Customer(10, 20, 20);
+	Customer Jonah = new Customer(8, 10, 10);
  
 	@Test
 	void test() {
@@ -39,6 +35,19 @@ class PQueueTest {
 		assertTrue(worthPolite.compare(Allen, Toth) < 0);
 		assertTrue(worthPolite.compare(Bradshaw, Allen) > 0);
 		assertTrue(worthPolite.compare(Allen, Bradshaw) < 0);
+		
+		assertTrue(worthQueue.isEmpty());
+		worthQueue.push(Allen);
+		assertFalse(worthQueue.isEmpty());
+		worthQueue.push(Bradshaw);
+		assertEquals(Bradshaw, worthQueue.pop());
+		worthQueue.push(Jonah);
+		worthQueue.push(Jackson);
+		assertEquals(Allen, worthQueue.pop());
+		assertEquals(Jackson, worthQueue.pop());
+		assertEquals(Jonah, worthQueue.pop());
+		assertTrue(worthQueue.isEmpty());
+		
 	}
 
 }

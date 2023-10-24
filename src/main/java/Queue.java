@@ -1,6 +1,6 @@
 public class Queue<T>
 {
-	private class Node<T>{
+	protected class Node<T>{
 		T val;
 		Node<T> next;
 		
